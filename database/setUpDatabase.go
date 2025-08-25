@@ -15,9 +15,8 @@ import (
 var MongoClient *mongo.Client
 
 func Connect() {
-	env := godotenv.Load()
-	if env != nil {
-		log.Fatal("Error loading .env file")
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using environment variables from system")
 	}
 	mongoURI := os.Getenv("MONGO_URI")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
